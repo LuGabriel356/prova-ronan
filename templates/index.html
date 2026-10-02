@@ -14,8 +14,8 @@
         <div class="container">
             <a class="navbar-brand" href="/">Calculadora de IMC</a>
             <ul class="navbar-nav ms-auto flex-row gap-3">
-                <li class="nav-item"><a class="nav-link" href="/">Calculadora</a></li>
-                <li class="nav-item"><a class="nav-link" href="/equipe">Equipe</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('pagina_inicial') }}">Calculadora</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('equipe') }}">Equipe</a></li>
             </ul>
         </div>
     </nav>
@@ -26,7 +26,7 @@
         <div class="card">
             <div class="card-header">Informe seus dados</div>
             <div class="card-body">
-                <form method="post" action="/">
+                <form method="post" action="{{ url_for('pagina_inicial') }}">
                     <div class="mb-3">
                         <label for="nome" class="form-label">Nome</label>
                         <input type="text" class="form-control" id="nome" name="nome" required>
@@ -46,16 +46,26 @@
             </div>
         </div>
 
-        <div class="card mt-4">
-            <div class="card-header">Resultado</div>
-            <div class="card-body">
-                <div class="alert alert-success mb-0" role="alert">
-                    <h4 class="alert-heading">Nome da pessoa</h4>
-                    <p class="mb-1">Seu IMC é <strong>00,00</strong></p>
-                    <p class="mb-0">Faixa: <strong>Nome da faixa</strong></p>
+            <div class="card mt-4">
+                <div class="card-header">Resultado</div>
+                <div class="card-body">
+                    <div class="alert alert-success mb-0" role="alert">
+                        <h4 class="alert-heading">{{ nome }}</h4>
+                        
+                        <p class="mb-1">Seu IMC é <strong>{{ imc }}</strong></p>
+                        <p class="mb-0">Faixa:</p>
+                            {% if imc < 18.5 %}
+                            <p><strong>🔵 Abaixo do peso</strong></p>
+                            {% elif imc >= 18.5 and imc < 25 %}
+                            <p><strong>🟢 Peso normal</strong></p>
+                            {% elif imc >= 25 and imc < 30 %}
+                            <p><strong>🟡 Sobrepeso</strong></p>
+                            {% else %}
+                            <p><strong>🔴 Obesidade</strong></p>
+                            {% endif %}
+                    </div>
                 </div>
             </div>
-        </div>
     </div>
 </body>
 
